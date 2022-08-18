@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { User } from 'src/user/entity/user.entity';
+import { Product } from './product/entity/product.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -15,9 +18,10 @@ import { UserModule } from './user/user.module';
       username: 'root',
       password: '10445609',
       database: 'modern_walk',
-      entities: [User],
+      entities: [User, Product],
       synchronize: true,
     }),
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
