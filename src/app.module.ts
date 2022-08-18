@@ -7,6 +7,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
+import { CategoryModule } from './category/category.module';
+import { Category } from './category/entity/category.entity';
 
 @Module({
   imports: [
@@ -18,10 +20,11 @@ import { ProductModule } from './product/product.module';
       username: 'root',
       password: '10445609',
       database: 'modern_walk',
-      entities: [User, Product],
+      entities: [User, Product, Category],
       synchronize: true,
     }),
     ProductModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
