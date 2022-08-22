@@ -7,10 +7,13 @@ import {
   Param,
   Body,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+
 import { ProductService } from './product.service';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 
+@ApiTags('Products')
 @Controller('/products')
 export class ProductController {
   constructor(private productService: ProductService) {}
