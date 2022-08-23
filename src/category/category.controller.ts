@@ -7,11 +7,11 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 import { CategoryService } from './category.service';
-import { UpdateCategoryDto } from './dto/create-category.dto';
-import { CreateCategoryDto } from './dto/update-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CreateCategoryDto } from './dto/create-category.dto';
 
 @ApiTags('Categories')
 @Controller('/categories')
@@ -19,21 +19,25 @@ export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
   @Get()
+  @ApiOperation({ summary: 'Get all categories' })
   getAllCategories() {
     return this.categoryService.getAllCategories();
   }
 
   @Get('/:id')
+  @ApiOperation({ summary: 'Get category using Id' })
   getCategoryById(@Param('id') id: number) {
     return this.categoryService.getCategoryById(id);
   }
 
   @Delete('/:id')
+  @ApiOperation({ summary: 'Delete category using Id' })
   deleteCategoryById(@Param('id') id: number) {
     return this.categoryService.deleteCategoryById(id);
   }
 
   @Patch('/:id')
+  @ApiOperation({ summary: 'Update category using Id' })
   updateCategoryById(
     @Body() updateCategoryDto: UpdateCategoryDto,
     @Param('id') id: number,
@@ -42,6 +46,7 @@ export class CategoryController {
   }
 
   @Post()
+  @ApiOperation({ summary: 'Create category' })
   addCategory(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.addCategory(createCategoryDto);
   }
