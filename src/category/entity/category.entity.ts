@@ -9,5 +9,5 @@ export class Category {
   name: string;
 
   @Column()
-  tenantId: string;
+  tenantId: number;
 }
