@@ -19,7 +19,7 @@ import { Tenant } from './tenant/entity/tenant.entity';
       port: 3306,
       username: 'root',
       password: '10445609',
-      database: 'modern_walk',
+      database: 'modernwalk',
       entities: [User, Product, Category, Tenant],
       synchronize: true,
     }),
