@@ -18,6 +18,9 @@ export class User {
   @Column()
   password: string;
 
+  @Column()
+  tenantId: number;
+
   @ManyToOne(() => Tenant, (tenant) => tenant.users)
   tenant: Tenant;
 }

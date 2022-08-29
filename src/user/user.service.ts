@@ -10,18 +10,18 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entity/user.entity';
 import * as bcrypt from 'bcrypt';
+import { TenantService } from './../tenant/tenant.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private tenantService: TenantService,
   ) {}
 
   getAllUsers(): Promise<User[]> {
-    return this.userRepository.find({
-      relations: ['tenant'],
-    });
+    return this.userRepository.find();
   }
   async getUserById(id: number) {
     let user = await this.userRepository.findOne({ where: { id: id } });
@@ -39,6 +39,9 @@ export class UserService {
     return this.userRepository.delete(id);
   }
   async addUser(createUserDto: CreateUserDto) {
+    //check tenant id exist
+    await this.tenantService.getTenantById(createUserDto.tenantId);
+
     const emailCheck = await this.userRepository.findOne({
       where: { email: createUserDto.email },
     });

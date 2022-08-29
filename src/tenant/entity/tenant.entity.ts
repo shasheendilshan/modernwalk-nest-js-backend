@@ -12,6 +12,6 @@ export class Tenant {
   @Column()
   themeId: number;
 
-  @OneToMany(() => User, (user) => user.tenant)
+  @OneToMany((type) => User, (user) => user.tenant)
   users: User[];
 }
