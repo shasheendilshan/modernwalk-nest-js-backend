@@ -24,6 +24,6 @@ export class Product {
   @Column()
   tenantId: number;
 
-  @ManyToOne(() => Tenant, (tenant) => tenant.products)
+  @ManyToOne(() => Tenant, (tenant) => tenant.products, { onDelete: 'CASCADE' })
   tenant: Tenant;
 }

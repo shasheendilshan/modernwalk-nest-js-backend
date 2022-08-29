@@ -21,6 +21,6 @@ export class User {
   @Column()
   tenantId: number;
 
-  @ManyToOne(() => Tenant, (tenant) => tenant.users)
+  @ManyToOne(() => Tenant, (tenant) => tenant.users, { onDelete: 'CASCADE' })
   tenant: Tenant;
 }

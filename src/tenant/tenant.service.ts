@@ -13,7 +13,9 @@ export class TenantService {
   ) {}
 
   getAllTenants(): Promise<Tenant[]> {
-    return this.tenantRepository.find();
+    return this.tenantRepository.find({
+      relations: ['products'],
+    });
   }
 
   async getTenantById(id: number) {
