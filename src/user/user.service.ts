@@ -43,7 +43,7 @@ export class UserService {
     await this.tenantService.getTenantById(createUserDto.tenantId);
 
     const emailCheck = await this.userRepository.findOne({
-      where: { email: createUserDto.email },
+      where: { email: createUserDto.email, tenantId: createUserDto.tenantId },
     });
     if (emailCheck) throw new ConflictException('Email already registered');
     const hashPassword = await bcrypt.hash(createUserDto.password, 12);
