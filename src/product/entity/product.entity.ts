@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Tenant } from './../../tenant/entity/tenant.entity';
 
 @Entity()
 export class Product {
@@ -7,9 +8,6 @@ export class Product {
 
   @Column()
   title: string;
-
-  @Column()
-  tenantId: number;
 
   @Column()
   price: number;
@@ -22,4 +20,10 @@ export class Product {
 
   @Column()
   image: string;
+
+  @Column()
+  tenantId: number;
+
+  @ManyToOne(() => Tenant, (tenant) => tenant.products)
+  tenant: Tenant;
 }

@@ -5,12 +5,14 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './entity/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TenantService } from './../tenant/tenant.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
+    private tenantService: TenantService,
   ) {}
 
   getAllProducts(): Promise<Product[]> {
@@ -35,7 +37,8 @@ export class ProductService {
     return this.productRepository.update(id, updateProductDto);
   }
 
-  addProduct(createProductDto: CreateProductDto) {
+  async addProduct(createProductDto: CreateProductDto) {
+    await this.tenantService.getTenantById(createProductDto.tenantId);
     return this.productRepository.save(createProductDto);
   }
 }
