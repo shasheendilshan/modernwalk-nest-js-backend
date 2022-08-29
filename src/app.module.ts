@@ -9,6 +9,7 @@ import { CategoryModule } from './category/category.module';
 import { Category } from './category/entity/category.entity';
 import { TenantModule } from './tenant/tenant.module';
 import { Tenant } from './tenant/entity/tenant.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,13 +20,14 @@ import { Tenant } from './tenant/entity/tenant.entity';
       port: 3306,
       username: 'root',
       password: '10445609',
-      database: 'modern_walk',
+      database: 'modernwalk',
       entities: [User, Product, Category, Tenant],
       synchronize: true,
     }),
     ProductModule,
     CategoryModule,
     TenantModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
