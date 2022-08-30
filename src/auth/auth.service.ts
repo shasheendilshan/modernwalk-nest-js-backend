@@ -1,7 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CreateUserDto } from '../auth/dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserService } from './../user/user.service';
+import { CreateUserDto } from '../user/dto/create-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
     const allUsers = await this.userService.getAllUsers();
     const user = allUsers.find((user) => user.email === loginAuthDto.email);
     if (!user) throw new UnauthorizedException('Credentials incorrect');
-    if (user.password !== loginAuthDto.password)
+    if (!(await bcrypt.compare(loginAuthDto.password, user.password)))
       throw new UnauthorizedException('Credentials incorrect');
     return user;
   }

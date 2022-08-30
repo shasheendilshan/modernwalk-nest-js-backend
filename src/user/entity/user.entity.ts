@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Tenant } from '../../tenant/entity/tenant.entity';
 
 @Entity()
 export class User {
@@ -16,4 +17,10 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column()
+  tenantId: number;
+
+  @ManyToOne(() => Tenant, (tenant) => tenant.users, { onDelete: 'CASCADE' })
+  tenant: Tenant;
 }

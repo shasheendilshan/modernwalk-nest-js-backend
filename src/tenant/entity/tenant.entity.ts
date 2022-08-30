@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/user/entity/user.entity';
+import { Product } from './../../product/entity/product.entity';
 
 @Entity()
 export class Tenant {
@@ -10,4 +12,10 @@ export class Tenant {
 
   @Column()
   themeId: number;
+
+  @OneToMany((type) => User, (user) => user.tenant)
+  users: User[];
+
+  @OneToMany((type) => Product, (product) => product.tenant)
+  products: Product[];
 }
