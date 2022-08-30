@@ -14,7 +14,11 @@ export class AuthService {
 
   async login(loginAuthDto: LoginUserDto) {
     const allUsers = await this.userService.getAllUsers();
-    const user = allUsers.find((user) => user.email === loginAuthDto.email);
+    const user = allUsers.find(
+      (user) =>
+        user.email === loginAuthDto.email &&
+        user.tenantId === loginAuthDto.tenantId,
+    );
     if (!user) throw new UnauthorizedException('Credentials incorrect');
     if (!(await bcrypt.compare(loginAuthDto.password, user.password)))
       throw new UnauthorizedException('Credentials incorrect');
