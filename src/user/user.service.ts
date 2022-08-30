@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -23,6 +24,15 @@ export class UserService {
   getAllUsers(): Promise<User[]> {
     return this.userRepository.find();
   }
+
+  async getAllUsersForTenant(tenantId: number): Promise<User[]> {
+    if (!tenantId)
+      throw new BadRequestException('tenantId required as query parameter');
+    return await this.userRepository.find({
+      where: { tenantId: tenantId },
+    });
+  }
+
   async getUserById(id: number) {
     let user = await this.userRepository.findOne({ where: { id: id } });
     if (!user) {

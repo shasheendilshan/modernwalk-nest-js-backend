@@ -6,6 +6,7 @@ import {
   Post,
   Param,
   Body,
+  Query,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
@@ -18,10 +19,16 @@ import { CreateProductDto } from './dto/create-product.dto';
 export class ProductController {
   constructor(private productService: ProductService) {}
 
+  // @Get()
+  // @ApiOperation({ summary: 'Get all products' })
+  // getAllProducts() {
+  //   return this.productService.getAllProducts();
+  // }
+
   @Get()
-  @ApiOperation({ summary: 'Get all products' })
-  getAllProducts() {
-    return this.productService.getAllProducts();
+  @ApiOperation({ summary: 'Get all products for tenant' })
+  getAllProductsForTenant(@Query('tenantId') tenantId: number) {
+    return this.productService.getAllProductsForTenant(tenantId);
   }
 
   @Get('/:id')

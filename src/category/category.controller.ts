@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
@@ -18,10 +19,16 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
+  // @Get()
+  // @ApiOperation({ summary: 'Get all categories' })
+  // getAllCategories() {
+  //   return this.categoryService.getAllCategories();
+  // }
+
   @Get()
-  @ApiOperation({ summary: 'Get all categories' })
-  getAllCategories() {
-    return this.categoryService.getAllCategories();
+  @ApiOperation({ summary: 'Get all categories for tenant' })
+  getAllCategoriesForTenant(@Query('tenantId') tenantId: number) {
+    return this.categoryService.getAllCategoriesForTenant(tenantId);
   }
 
   @Get('/:id')

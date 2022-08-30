@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -17,6 +21,14 @@ export class ProductService {
 
   getAllProducts(): Promise<Product[]> {
     return this.productRepository.find();
+  }
+
+  async getAllProductsForTenant(tenantId: number): Promise<Product[]> {
+    if (!tenantId)
+      throw new BadRequestException('tenantId required as query parameter');
+    return await this.productRepository.find({
+      where: { tenantId: tenantId },
+    });
   }
 
   async getProductById(id: number) {

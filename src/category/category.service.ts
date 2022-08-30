@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { Repository } from 'typeorm';
@@ -14,6 +18,14 @@ export class CategoryService {
 
   getAllCategories(): Promise<Category[]> {
     return this.categoryRepository.find();
+  }
+
+  async getAllCategoriesForTenant(tenantId: number): Promise<Category[]> {
+    if (!tenantId)
+      throw new BadRequestException('tenantId required as query parameter');
+    return await this.categoryRepository.find({
+      where: { tenantId: tenantId },
+    });
   }
   async getCategoryById(id: number): Promise<Category> {
     let category = await this.categoryRepository.findOne({ where: { id: id } });

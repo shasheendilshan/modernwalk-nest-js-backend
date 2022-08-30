@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
@@ -20,10 +21,17 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   //get all users
+  // @Get()
+  // @ApiOperation({ summary: 'Get all users' })
+  // getAllUsers() {
+  //   return this.userService.getAllUsers();
+  // }
+
+  // get all users for tenant
   @Get()
-  @ApiOperation({ summary: 'Get all users' })
-  getAllUsers() {
-    return this.userService.getAllUsers();
+  @ApiOperation({ summary: 'Get all users for tenant' })
+  getAllUsersForTenant(@Query('tenantId') tenantId: number) {
+    return this.userService.getAllUsersForTenant(tenantId);
   }
 
   //get user by id
