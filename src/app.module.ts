@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 
 import { User } from 'src/user/entity/user.entity';
 import { Product } from './product/entity/product.entity';
@@ -13,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     UserModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
