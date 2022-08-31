@@ -12,20 +12,23 @@ import { UserController } from './user.controller';
 import { User } from './entity/user.entity';
 import { Tenant } from './../tenant/entity/tenant.entity';
 import { ValidateUserMiddleware } from './middlewares/validate-user.middleware';
-
+import { JwtService } from '@nestjs/jwt';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
     TypeOrmModule.forFeature([Tenant]),
   ],
   controllers: [UserController],
-  providers: [UserService, TenantService],
+  providers: [UserService, TenantService, JwtService],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ValidateUserMiddleware).forRoutes({
-      path: 'users/:id',
-      method: RequestMethod.GET,
-    });
+    consumer
+      .apply(ValidateUserMiddleware)
+      .exclude({
+        path: 'users',
+        method: RequestMethod.GET,
+      })
+      .forRoutes(UserController);
   }
 }
