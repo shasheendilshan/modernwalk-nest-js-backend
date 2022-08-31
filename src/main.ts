@@ -11,6 +11,7 @@ async function bootstrap() {
     .setDescription('Modern walk multi-tenant backend')
     .setVersion('1.0')
     .addTag('Modernwalk')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

@@ -9,7 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -35,6 +35,7 @@ export class UserController {
   }
 
   //get user by id
+  @ApiBearerAuth()
   @Get('/:id')
   @ApiOperation({ summary: 'Get user using Id' })
   getUserById(@Param('id', ParseIntPipe) id: number) {
