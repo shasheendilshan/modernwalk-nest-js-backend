@@ -25,10 +25,16 @@ export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ValidateUserMiddleware)
-      .exclude({
-        path: 'users',
-        method: RequestMethod.GET,
-      })
+      .exclude(
+        {
+          path: 'users',
+          method: RequestMethod.GET,
+        },
+        {
+          path: 'users',
+          method: RequestMethod.POST,
+        },
+      )
       .forRoutes(UserController);
   }
 }

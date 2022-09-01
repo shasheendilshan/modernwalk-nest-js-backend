@@ -43,6 +43,7 @@ export class UserController {
   }
 
   //delete user
+  @ApiBearerAuth()
   @Delete('/:id')
   @ApiOperation({ summary: 'Delete user using Id' })
   deleteUserById(@Param('id', ParseIntPipe) id: number) {
@@ -50,6 +51,7 @@ export class UserController {
   }
 
   //update user by id
+  @ApiBearerAuth()
   @Patch('/:id')
   @ApiOperation({ summary: 'Update user using Id' })
   updateUserById(
