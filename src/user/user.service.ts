@@ -28,6 +28,7 @@ export class UserService {
   async getAllUsersForTenant(tenantId: number): Promise<User[]> {
     if (!tenantId)
       throw new BadRequestException('tenantId required as query parameter');
+    await this.tenantService.getTenantById(tenantId);
     return await this.userRepository.find({
       where: { tenantId: tenantId },
     });
